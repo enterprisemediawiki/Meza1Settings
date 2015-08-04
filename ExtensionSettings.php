@@ -56,12 +56,6 @@ $egExtensionLoaderConfig += array(
 		'branch' => 'master',
 	),
 
-	// SHOULD BE managed by composer due to use of SemanticMeetingMinutes
-	'HeaderFooter' => array(
-		'git' => 'https://github.com/enterprisemediawiki/HeaderFooter.git',
-		'branch' => 'master',
-	),
-
 	'WhoIsWatching' => array(
 		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/WhoIsWatching.git',
 		'branch' => 'REL1_23',
@@ -77,7 +71,7 @@ $egExtensionLoaderConfig += array(
 
 	'SemanticForms' => array(
 		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/SemanticForms.git',
-		'branch' => 'REL1_23',
+		'tag' => '3.3.2',
 	),
 
 	'SemanticInternalObjects' => array(
@@ -212,15 +206,15 @@ $egExtensionLoaderConfig += array(
 		}
 	),
 
-	// 'IMSQuery' => array(
-	// 	'git' => 'https://github.com/jamesmontalvo3/IMSQuery.git',
-	// 	'branch' => 'master',
-	// ),
+	'IMSQuery' => array(
+		'git' => 'https://github.com/jamesmontalvo3/IMSQuery.git',
+		'branch' => 'master',
+	),
 
-	// 'MasonryMainPage' => array(
-	// 	'git' => 'https://github.com/enterprisemediawiki/MasonryMainPage.git',
-	// 	'branch' => 'master',
-	// ),
+	'MasonryMainPage' => array(
+		'git' => 'https://github.com/enterprisemediawiki/MasonryMainPage.git',
+		'branch' => 'master',
+	),
 
 	'WatchAnalytics' => array(
 		'git' => 'https://github.com/enterprisemediawiki/WatchAnalytics.git',
@@ -230,41 +224,68 @@ $egExtensionLoaderConfig += array(
 		),
 	),
 
-	// managed by composer due to use of SemanticMeetingMinutes
-	// 'NumerAlpha' => array(
-	// 	'git' => 'https://github.com/jamesmontalvo3/NumerAlpha.git',
-	// 	'branch' => 'master',
-	// ),
+	'Variables' => array(
+		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/Variables.git',
+		'branch' => 'REL1_23',
+	),
 
-	// 'Variables' => array(
-	// 	'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/Variables.git',
-	// 	'branch' => 'REL1_23',
-	// ),
+	'SummaryTimeline' => array(
+		'git' => 'https://github.com/darenwelsh/SummaryTimeline.git',
+		'branch' => 'master',
+	),
 
-	// 'SummaryTimeline' => array(
-	// 	'git' => 'https://github.com/darenwelsh/SummaryTimeline.git',
-	// 	'branch' => 'master',
-	// ),
+	'YouTube' => array(
+		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/YouTube.git',
+		'branch' => 'REL1_23',
+	),
 
-	// 'YouTube' => array(
-	// 	'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/YouTube.git',
-	// 	'branch' => 'REL1_23',
-	// ),
+	'ContributionScores' => array(
+		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/ContributionScores.git',
+		'branch' => 'REL1_23',
+		'afterFn' => function() {
+			$wgContribScoreIgnoreBots = true;          // Exclude Bots from the reporting - Can be omitted.
+			$wgContribScoreIgnoreBlockedUsers = true;  // Exclude Blocked Users from the reporting - Can be omitted.
+			$wgContribScoresUseRealName = true;        // Use real user names when available - Can be omitted. Only for MediaWiki 1.19 and later.
+			$wgContribScoreDisableCache = false;       // Set to true to disable cache for parser function and inclusion of table.
+			//Each array defines a report - 7,50 is "past 7 days" and "LIMIT 50" - Can be omitted.
+			$wgContribScoreReports = array(
+			    array(7,50),
+			    array(30,50),
+			    array(0,50));
+		}
+	),
 
-	// 'ContributionScores' => array(
-	// 	'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/ContributionScores.git',
-	// 	'branch' => 'REL1_23',
-	// 	'afterFn' => function() {
-	// 		$wgContribScoreIgnoreBots = true;          // Exclude Bots from the reporting - Can be omitted.
-	// 		$wgContribScoreIgnoreBlockedUsers = true;  // Exclude Blocked Users from the reporting - Can be omitted.
-	// 		$wgContribScoresUseRealName = true;        // Use real user names when available - Can be omitted. Only for MediaWiki 1.19 and later.
-	// 		$wgContribScoreDisableCache = false;       // Set to true to disable cache for parser function and inclusion of table.
-	// 		//Each array defines a report - 7,50 is "past 7 days" and "LIMIT 50" - Can be omitted.
-	// 		$wgContribScoreReports = array(
-	// 		    array(7,50),
-	// 		    array(30,50),
-	// 		    array(0,50));
-	// 	}
-	// ),
+
+
+
+	#
+	# Meeting Minutes kludge...
+	#
+	# Currently the EVA and TOPO wikis are on an extension called MeetingMinutes
+	# but that extension was modified and became Semantic Meeting Minutes. For 
+	# now we will load MeetingMinutes, but it needs to be replaced by SMM.
+	#	
+	'MeetingMinutes' => array(
+		'git' => 'https://github.com/enterprisemediawiki/MeetingMinutes.git',
+		'branch' => 'master',
+	),
+
+
+	#
+	# Upon switching to SMM (see above) remove these extensions. They are
+	# composer dependencies, and thus should be installed there.
+	#
+	# Alternatively: let ExtensionLoader manage them and leave these installed here.
+	#
+	'NumerAlpha' => array(
+		'git' => 'https://github.com/jamesmontalvo3/NumerAlpha.git',
+		'branch' => 'master',
+	),
+
+	// SHOULD BE managed by composer due to use of SemanticMeetingMinutes
+	'HeaderFooter' => array(
+		'git' => 'https://github.com/enterprisemediawiki/HeaderFooter.git',
+		'branch' => 'master',
+	),
 
 );
