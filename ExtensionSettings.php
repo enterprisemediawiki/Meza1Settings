@@ -288,4 +288,17 @@ $egExtensionLoaderConfig += array(
 		'branch' => 'master',
 	),
 
+	'Math' => array(
+		'git' => 'https://gerrit.wikimedia.org/r/mediawiki/extensions/Math.git',
+		'branch' => 'REL1_23',
+		'afterFn' => function() {
+			// See below for installation requirements and configuration settings:
+			$GLOBALS['wgMathValidModes'][] = MW_MATH_MATHJAX; // Define MathJax as one of the valid math rendering modes
+			$GLOBALS['wgUseMathJax'] = true; // Enable MathJax as a math rendering option for users to pick
+			$GLOBALS['wgDefaultUserOptions']['math'] = MW_MATH_MATHJAX; // Set MathJax as the default rendering option for all users (optional)
+			$GLOBALS['wgMathDisableTexFilter'] = true; // or compile "texvccheck"
+			$GLOBALS['wgDefaultUserOptions']['mathJax'] = true; // Enable the MathJax checkbox option
+		},
+	),
+
 );
