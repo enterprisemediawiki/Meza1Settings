@@ -255,34 +255,26 @@ $egExtensionLoaderConfig += array(
 		}
 	),
 
-
-
-
 	#
-	# Meeting Minutes kludge...
+	# Semantic Meeting Minutes 
 	#
-	# Currently the EVA and TOPO wikis are on an extension called MeetingMinutes
-	# but that extension was modified and became Semantic Meeting Minutes. For 
-	# now we will load MeetingMinutes, but it needs to be replaced by SMM.
 	#	
-	'MeetingMinutes' => array(
-		'git' => 'https://github.com/enterprisemediawiki/MeetingMinutes.git',
+	'SemanticMeetingMinutes' => array(
+		'git' => 'https://github.com/enterprisemediawiki/SemanticMeetingMinutes.git',
 		'branch' => 'master',
 	),
 
 
 	#
-	# Upon switching to SMM (see above) remove these extensions. They are
-	# composer dependencies, and thus should be installed there.
-	#
-	# Alternatively: let ExtensionLoader manage them and leave these installed here.
+	# NumerAlpha and HeaderFooter are dependencies for SemanticMeetingMinutes
+	# Instead of installing SMM via Composer, we are using ExtensionLoader
+	# and explicitly adding the dependencies here:
 	#
 	'NumerAlpha' => array(
 		'git' => 'https://github.com/jamesmontalvo3/NumerAlpha.git',
 		'branch' => 'master',
 	),
 
-	// SHOULD BE managed by composer due to use of SemanticMeetingMinutes
 	'HeaderFooter' => array(
 		'git' => 'https://github.com/enterprisemediawiki/HeaderFooter.git',
 		'branch' => 'master',

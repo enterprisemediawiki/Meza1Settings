@@ -25,5 +25,10 @@ $srfgFormats = array(
 	'tagcloud',
 	'outline',
 	'valuerank',
-	'excel'
+	'excel',
+	'filtered', 
+	'jqplotchart', 
+	'datatables', 
+	'sum', 
+	'pagewidget'
 );
